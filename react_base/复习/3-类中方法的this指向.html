@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Person{
+            constructor(name,age){
+                this.name = name;
+                this.age = age;
+            }
+            study(){
+                console.log(this);
+            }
+        }
+        const p1 = new Person('Tom',18)
+        // 通过实例调用 所以this指向实例
+        p1.study()
+        const p = p1.study;
+        // 直接调用，并且this在类中，所以this就是undefined
+        p()//undefined
+    </script>
+</body>
+</html>

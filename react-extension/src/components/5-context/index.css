@@ -1,0 +1,12 @@
+.parent{
+    background-color: burlywood;
+    padding: 30px;
+}
+.father{
+    background-color: blueviolet;
+    padding: 30px;
+}
+.son{
+    background-color: aquamarine;
+    padding: 30px;
+}

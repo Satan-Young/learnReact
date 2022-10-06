@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+    <!-- 支持将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        // 创建组件
+
+        function Person(props){
+            const {name,age,gender} = props
+            return(
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>年龄：{age}</li>
+                    <li>性别：{gender}</li>
+                </ul>
+            )
+        }
+
+        // 对标签属性进行类型，必要性的限制
+        Person.propTypes = {
+            name:PropTypes.string.isRequired,//限制name必传，并且为字符串
+            gender:PropTypes.string, //限制gender为字符串
+            age:PropTypes.number, //限制age为数值 
+        }
+
+        // 指定默认标签属性值
+        Person.defaultProps = {
+            gender:'female', //设置gender的默认值为male
+            age:20 //设置年龄的默认值为18
+        }
+        ReactDOM.render(<Person name='tom' />,document.getElementById('test1'))
+    </script>
+</body>
+</html>

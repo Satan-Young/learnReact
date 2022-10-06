@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        总结：
+            1.类中的构造不是必须要写的，要对实例进行一些初始化的操作，比如添加属性才要写
+            2.如果A类继承了B类，且A中写了构造器，那么A类构造器中一定要调用super,并且一定要写在最上面
+            3.类中所定义的方法，都是放在了类的原型对象上，给实例来使用
+        */
+        // 创建一个Person类
+        class Person{
+            constructor(name,age){
+                this.name = name;
+                this.age = age;
+            }
+            speak(){
+                console.log(`我是${this.name}，我${this.age}岁`);
+            }
+        }
+        // 创建一个Person实例对象
+        const p1 = new Person('Tom',18)
+        p1.speak()
+
+        class Student extends Person{
+            constructor(name,age,garde){
+                super(name,age)
+                this.garde = garde
+            }
+            // 重写从父类身上继承过来的方法
+            speak(){
+                console.log(`我是${this.name}，我${this.age}岁，我正在上${this.garde}`);
+            }
+        }
+        const s1 = new Student('Jerry',19,'高三')
+        s1.speak()
+
+        class Car{
+            constructor(name,price){
+                this.name = name
+                this.price = price
+            }
+            // 类中可以直接写赋值语句（给car这个类上添加一个wheel属性值为4）
+            wheel = 4
+        }
+        const c1 = new Car('a',100)
+        console.log(c1); 
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 支持将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        // 创建组件
+        class Demo extends React.Component {
+            // 点击函数
+            showData = () => {
+                console.log(this);
+                const { input1 } = this
+                alert(input1.value)
+            }
+            // 失去焦点函数
+            showData2 = () => {
+                const { input2 } = this
+                alert(input2.value)
+            }
+            render() {
+                return (
+                    <div>
+                        {/*
+                            回调形式的ref： ref={currentNode=>{this.input1 = currentNode}}
+                            ref当前所处的节点挂载在实例对象上并取了个名字叫input1
+                            回调函数中的this：因为是箭头函数，所以this定义在render中 当时实例去调用render时this就指向实例
+                        */}
+                        <input ref={currentNode => { this.input1 = currentNode }} type="text" placeholder='点击按钮显示数据' />&nbsp;
+                        <button onClick={this.showData}>点击显示左侧数据</button>&nbsp;
+                        <input ref={currentNode => { this.input2 = currentNode }} onBlur={this.showData2} type="text" placeholder='失去焦点显示数据' />&nbsp;
+                    </div>
+                )
+            }
+        }
+        // 渲染组件到页面
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>

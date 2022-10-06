@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 支持将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        // 创建组件
+        class Demo extends React.Component {
+            state = {
+                isHot: true
+            }
+            // 点击函数
+            showData = () => {
+                // console.log(this);
+                const { input1 } = this
+                alert(input1.value)
+            }
+            changeWeather = () => {
+                const { isHot } = this.state
+                this.setState({ isHot: !isHot })
+            }
+            showInfo = (c) => { 
+                this.input1 = c
+                console.log('@',c);
+            }
+            render() {
+                return (
+                    <div>
+                        <h2>今天天气很{this.state.isHot ? '炎热' : '凉爽'}</h2>
+                        {/*以内联回调函数的形式会调用1+2n次*/}
+                        {/*<input ref={c => { this.input1 = c; console.log('@',c); }} type="text" placeholder='点击按钮显示数据' /><br/><br/>*/}
+                        <input ref={this.showInfo} type="text" />
+                        <button onClick={this.showData}>点击显示左侧数据</button>&nbsp;
+                        <button onClick={this.changeWeather}>改变天气</button>
+                    </div>
+                )
+            }
+        }
+        // 渲染组件到页面
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>

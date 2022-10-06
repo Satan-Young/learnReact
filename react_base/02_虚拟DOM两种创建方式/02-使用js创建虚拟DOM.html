@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 1.创建虚拟DOM ; -->
+    <!-- 2.将虚拟DOM加入到容器中 ReactDOM.render(虚拟DOM，容器)  -->
+    <script type="text/javascript">
+        const vDom = React.createElement('h1', {
+            id: 'title'
+        }, 'Hello React');
+        ReactDOM.render(vDom, document.getElementById('test'));
+    </script>
+</body>
+
+</html>

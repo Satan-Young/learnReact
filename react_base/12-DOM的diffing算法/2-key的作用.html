@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 支持将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class Person extends React.Component {
+
+            /*
+            经典面试题：
+                1.react/vue中key有什么作用(key的原理是什么)
+                2.为什么遍历列表时，key最好不用index
+
+            1).虚拟DOM的key的作用：
+                1.简单的说：key是虚拟DOM对象的标识，在更新显示时key起着极其重要的作用
+
+                2.详细的说：当状态中的数据发生变化时，react会根据【新数据】生成【新的虚拟DOM】
+                           随后react会进行【新虚拟DOM】和【旧虚拟DOM】进行diff比较，规则如下：
+
+                    a.旧虚拟DOM找到了和新虚拟DOM相同的key值：
+                        若虚拟DOM的内容没有变，则直接使用原来的真实DOM
+                        若虚拟DOM的内容发生改变，则生成新的真实DOM，随后替换掉页面中的真实DOM
+
+                    b.旧虚拟DOM未找到了和新虚拟DOM相同的key值：
+                        根据数据创建新的真实DOM，随后渲染到页面
+
+            2).用index作为key值可能会引发的问题
+                1.若对数据进行：逆序添加，逆序删除等破坏顺序的操作
+                    会产生没有必要的真实DOM的更新===>界面效果没问题，但是效率低
+                2.如果节点内还有其他输入DOM
+                    会产生错误DOM更新===>界面有问题
+                3.如果不存在数据的逆序添加，逆序删除等破坏顺序的操作，仅用于渲染裂变进行展示，使用index作为key没有大问题
+
+            3)，开发中如何选择key?:
+                1.最好使用每一条数据的唯一标识，（id，身份证，电话号码）
+                2.仅用于页面的渲染也可以使用index
+            */
+
+            state = {
+                persons: [{
+                    id: 1,
+                    name: 'Tom',
+                    age: 18
+                }, {
+                    id: 2,
+                    name: 'Jerry',
+                    age: 19
+                }]
+            }
+
+            add = () => {
+                const { persons } = this.state
+                const newPerson = {
+                    id: 3,
+                    name: 'Bob',
+                    age: 20
+                }
+                this.setState({ persons: [newPerson, ...persons] })
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h2>人员信息表</h2>
+                        <button onClick={this.add}>新增Bob</button>
+                        <ul>
+                            {this.state.persons.map((item, index) => {
+                                return <li key={index}>{item.name}---{item.age}<input type="text" /></li>
+                            })}
+                        </ul>
+                        <hr />
+                        <ul>
+                            {this.state.persons.map((item) => {
+                                return <li key={item.id}>{item.name}---{item.age}<input type="text" /></li>
+                            })}
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Person />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>

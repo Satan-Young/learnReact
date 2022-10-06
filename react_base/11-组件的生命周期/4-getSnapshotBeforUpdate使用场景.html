@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .news {
+            width: 200px;
+            height: 150px;
+            background-color: aqua;
+            overflow: auto;
+        }
+
+        .newsList {
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+    <!-- 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+    <!-- 支持将jsx转为js -->
+    <script type="text/javascript" src="../js//17.0.1/babel.min.js"></script>
+    <script type="text/babel">
+        // 实现新增新闻且能固定在某一个高度
+        class News extends React.Component {
+            state = {
+                newsArray: []
+            }
+
+            componentDidMount() {
+                // 没过一秒创建一个新的新闻加入状态中
+                setInterval(() => {
+                    const { newsArray } = this.state
+                    const news = '新闻' + (newsArray.length + 1)
+                    this.setState({ newsArray: [news, ...newsArray] })
+                }, 1000);
+            }
+
+            getSnapshotBeforeUpdate() {
+                // 获取更新前的高度
+                return this.refs.news.scrollHeight
+            }
+            componentDidUpdate(prevProps, prevState, prevHeight) {
+                // 当前模块的最顶端 += 现在高度-更新前高度
+                this.refs.news.scrollTop += this.refs.news.scrollHeight - prevHeight
+                // console.log(this.refs.news.scrollTop, this.refs.news.scrollHeight, prevHeight);
+            }
+
+            render() {
+                return (
+                    <div className='news' ref='news'>
+                        {this.state.newsArray.map((item, index) => {
+                            return <div key={index} className='newsList'>{item}</div>
+                        })}
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<News />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>
